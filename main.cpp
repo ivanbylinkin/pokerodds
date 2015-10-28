@@ -50,13 +50,14 @@ public:
 			card tmp;
 			tmp.create_card();
 			// check current card
-			int value = tmp.show_value(),
+			int value = tmp.show_value() - 1,
 			card_suit = tmp.show_suit();
 			// check index of array
 			bool exists = counts[card_suit][value] == -1 ? false : true;
 			if (!exists){
 				dck[deck_size] = tmp;
 				deck_size++;
+				counts[card_suit][value] = 0;
 			}
 		}
 	}
