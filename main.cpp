@@ -61,6 +61,21 @@ public:
 			}
 		}
 	}
+    
+    void deal(card arr[], int cards){
+        // check if deck needs to reshuffle
+        if ((placeholder + cards) > 52){
+            shuffle();
+            placeholder = 0;
+            cout << endl << "reshuffling deck..." << endl;
+        }
+        // deals out the first n cards in the deck
+        for (int i=placeholder; i<cards; i++){
+            arr[i] = dck[i];
+        }
+        // move the placeholder up
+        placeholder += cards;
+    }
 
 	void show_deck(){
 		for (int i = 0; i < 52; i++){
@@ -69,6 +84,7 @@ public:
 	}
 private:
 	card dck[52];
+    int placeholder = 0;
 
 	void nullifyArr(int arr[], int n){
 		for (int i = 0; i < n; i++){
@@ -82,11 +98,31 @@ private:
 int main(){
 	// seed the generator
 	srand(time(NULL));
-	// make the deck
+	// tell the user shuffle is occuring
+    cout << "shuffling the deck" << endl;
+    // make the deck
 	deck newDeck;
 	newDeck.shuffle();
-	newDeck.show_deck();
-
+	// ask for how many cards to deal
+    cout << "how many cards should be dealt? " << endl;
+    int cards;
+    cin >> cards;
+    // ask how many hands to compute
+    cout << "how many hands should be simulated? " << endl;
+    int hands;
+    cin >> hands;
+    for (int i=0; i<hands; i++){
+        // deal the cards
+        card hand[cards];
+        newDeck.deal(hand, cards);
+        // show the hand
+        cout << endl << "hand #" << i << endl;
+        char suits[4] = { 'c', 'd', 'h', 's' };
+        for (int k=0; k<cards; k++){
+            cout << suits[hand[k].show_suit()] << " " << hand[k].show_value() << endl;
+        }
+    }
+    
 	cout << "Please press enter to continue..." << endl;
 	getchar();
 
